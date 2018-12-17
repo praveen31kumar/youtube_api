@@ -35,6 +35,7 @@
         }
         
     </style>
+
     <script type="text/javascript">
          <script src="bootstrap/js/fontawesome-all.js"></script>
          <script src="bootstrap/js/jquery-3.2.1.min.js"></script>
@@ -51,15 +52,16 @@
 
 <?php
 error_reporting(0);
-require_once "config.php";
+require_once "config.php"; //this includes setting and API key(you can use any key here for this script to run)
  
+//below code retrieve the keywords from query string by using super global variable $_GET 
 $arr_list = array();
 if (array_key_exists('q', $_GET) && array_key_exists('max_result', $_GET) && array_key_exists('order', $_GET)) {
     $keyword = $_GET['q'];
-    $format_keyword = implode("+", explode(" ", $keyword));
-    $url = "https://www.googleapis.com/youtube/v3/search?q=$format_keyword&order=". $_GET['order'] ."&part=snippet&contentDetails&chart=mostPopular&type=video&client=firefox&maxResults=". $_GET['max_result'] ."&key=". $key;
+    $url_keyword = implode("+", explode(" ", $keyword));
+    $url = "https://www.googleapis.com/youtube/v3/search?q=$url_keyword&order=". $_GET['order'] ."&part=snippet&contentDetails&chart=mostPopular&type=video&client=firefox&maxResults=". $_GET['max_result'] ."&key=". $key;
     // print_r($url);
- 
+    // this will append page token url
     if (array_key_exists('pageToken', $_GET)) 
     $url .= "&pageToken=". $_GET['pageToken'];
  
@@ -157,6 +159,7 @@ if (!empty($arr_list)) {
     <title></title>
 </head>
 <body>
+    <!-- for getting google trend result but static in nature-->
     <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1671_RC04/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderTopChartsWidget("fc042c71-95b2-43ac-919c-f6bca31f39c5", {"geo":"GLOBAL","guestPath":"https://trends.google.com:443/trends/embed/"}, 2018); </script> 
 </body>
 </html>
